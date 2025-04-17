@@ -1,8 +1,13 @@
 import { useEffect, useState } from "react";
 
+interface Link {
+  original: string;
+  short: string;
+}
+
 const ShortyBar: React.FC = () => {
   const [link, setLink] = useState("");
-  const [shortenedLinks, setShortenedLinks] = useState<string[]>(() => {
+  const [shortenedLinks, setShortenedLinks] = useState<Link[]>(() => {
     // Cargar los enlaces desde localStorage al inicializar el estado
     const storedLinks = localStorage.getItem("shortenedLinks");
     return storedLinks ? JSON.parse(storedLinks) : [];
@@ -10,15 +15,36 @@ const ShortyBar: React.FC = () => {
 
 
 
-    // Guardar los enlaces en localStorage cada vez que cambien
-    useEffect(() => {
-      localStorage.setItem("shortenedLinks", JSON.stringify(shortenedLinks));
-    }, [shortenedLinks]);
+  // Guardar los enlaces en localStorage cada vez que cambien
+  useEffect(() => {
+    localStorage.setItem("shortenedLinks", JSON.stringify(shortenedLinks));
+  }, [shortenedLinks]);
 
-  const handleShortenLink = () => {
+  const handleShortenLink = async () => {
     if (link.trim() !== "") {
-      setShortenedLinks((prevLinks) => [...prevLinks, link]);
-      setLink(""); // Limpiar el campo de entrada
+      try {
+        const response = await fetch('http://localhost:3000/shorten', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ original_url: link }),
+        })
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || "Failed to shorten link");
+        }
+        const data = await response.json()
+        setShortenedLinks((prevLinks) => [
+          { original: link, short: data.shortUrl },
+          ...prevLinks,
+        ]);
+        setLink(""); // Limpiar el campo de entrada
+      } catch (error) {
+        console.error('Error shortening URL:', error);
+      }
+
     }
   };
 
@@ -64,18 +90,32 @@ const ShortyBar: React.FC = () => {
           </svg>
         </button>
       </div>
-      <ul className="w-full max-w-2xl">
-        {shortenedLinks.map((shortenedLink, index) => (
+      <ul className="w-full max-w-3xl">
+        {shortenedLinks.map((linkObj, index) => (
           <li
             key={index}
             className="flex items-center justify-between px-4 py-2 "
           >
             <div className="flex flex-1/2  px-4 py-2 items-center justify-between  border border-gray-300 rounded-md mb-2 bg-white shadow-sm mr-3">
-              <span className="text-gray-700 truncate">{shortenedLink}</span>
+              <div className="flex justify-between  w-full">
+                {/* Enlace original a la izquierda */}
+                <span className="text-gray-500  w-1/2"  >
+                  {linkObj.original.length > 30 ? `${linkObj.original.slice(0, 30)}...` : linkObj.original}
+                </span>
+                <a
+                  href={linkObj.short}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-500 hover:underline w-1/2 text-right mr-2"
+                >
+                  {linkObj.short}
+                </a>
+              </div>
+
               <div className="flex space-x-2">
-                <button 
+                <button
                   title="Copy link"
-                  onClick={() => handleCopyLink(shortenedLink)}
+                  onClick={() => handleCopyLink(linkObj.short)}
                   className="text-blue-500 hover:text-blue-700 cursor-pointer"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-copy">
@@ -85,7 +125,7 @@ const ShortyBar: React.FC = () => {
 
                 <button
                   title="View stats"
-                  onClick={() => alert(`View stats for: ${shortenedLink}`)}
+                  onClick={() => alert(`View stats for: ${linkObj.short}`)}
                   className="text-green-500 hover:text-green-700 cursor-pointer"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-chart-column">
@@ -96,12 +136,12 @@ const ShortyBar: React.FC = () => {
 
             </div>
             <button
-                  title="Remove link"
-                  onClick={() => setShortenedLinks(shortenedLinks.filter((_, i) => i !== index))}
-                  className="text-red-500 hover:text-red-600 cursor-pointer"
-                >
-                  <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  className="icon icon-tabler icons-tabler-outline icon-tabler-x"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg>
-                </button>
+              title="Remove link"
+              onClick={() => setShortenedLinks(shortenedLinks.filter((_, i) => i !== index))}
+              className="text-red-500 hover:text-red-600 cursor-pointer"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-x"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg>
+            </button>
 
           </li>
         ))}
