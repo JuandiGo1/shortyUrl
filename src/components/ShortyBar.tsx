@@ -33,7 +33,7 @@ const ShortyBar: React.FC = () => {
       <div className="flex items-center space-x-2 mb-6">
         <input
           type="text"
-          placeholder="Enter your link to short"
+          placeholder="Enter your link to shorten"
           value={link}
           onChange={(e) => setLink(e.target.value)}
           className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-2xl"
@@ -42,7 +42,7 @@ const ShortyBar: React.FC = () => {
           onClick={handleShortenLink}
           className="cursor-pointer flex items-center px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
-          <span className="mr-2">Short URL</span>
+          <span className="mr-2">Shorten URL</span>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
