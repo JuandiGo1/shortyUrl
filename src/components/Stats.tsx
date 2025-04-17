@@ -11,7 +11,7 @@ const Stats: React.FC = () => {
   };
 
   return (
-    <section className="flex flex-col items-center justify-center h-screen ">
+    <section className="flex flex-col items-center justify-start h-screen ">
       <div className="mb-6 flex flex-col items-center justify-center ">
         <h1 className="text-2xl font-semibold mb-10">
           Get shortened link stats
