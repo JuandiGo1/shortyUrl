@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
+import { Link } from "../types/types";
+import LinkList from "./LinksList";
 
-interface Link {
-  original: string;
-  short: string;
-}
 
-const ShortyBar: React.FC = () => {
+const ShortyBar: React.FC<{ handleFetchStats: (link: string) => void }> = ({ handleFetchStats }) => {
   const [link, setLink] = useState("");
   const [shortenedLinks, setShortenedLinks] = useState<Link[]>(() => {
     // Cargar los enlaces desde localStorage al inicializar el estado
@@ -53,6 +51,10 @@ const ShortyBar: React.FC = () => {
     alert("Link copied to clipboard!");
   };
 
+  const handleRemoveLink = (index: number) => {
+    setShortenedLinks((prevLinks) => prevLinks.filter((_, i) => i !== index));
+  }
+
   return (
     <section className="flex flex-col items-center justify-center w-4xl h-auto py-10">
       <h1 className="text-4xl font-semibold mb-10">ShortyUrl</h1>
@@ -96,52 +98,12 @@ const ShortyBar: React.FC = () => {
             key={index}
             className="flex items-center justify-between px-4 py-2 "
           >
-            <div className="flex flex-1/2  px-4 py-2 items-center justify-between  border border-gray-300 rounded-md mb-2 bg-white shadow-sm mr-3">
-              <div className="flex justify-between  w-full">
-                {/* Enlace original a la izquierda */}
-                <span className="text-gray-500  w-1/2"  >
-                  {linkObj.original.length > 30 ? `${linkObj.original.slice(0, 30)}...` : linkObj.original}
-                </span>
-                <a
-                  href={linkObj.short}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-500 hover:underline w-1/2 text-right mr-2"
-                >
-                  {linkObj.short}
-                </a>
-              </div>
-
-              <div className="flex space-x-2">
-                <button
-                  title="Copy link"
-                  onClick={() => handleCopyLink(linkObj.short)}
-                  className="text-blue-500 hover:text-blue-700 cursor-pointer"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-copy">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" />
-                  </svg>
-                </button>
-
-                <button
-                  title="View stats"
-                  onClick={() => alert(`View stats for: ${linkObj.short}`)}
-                  className="text-green-500 hover:text-green-700 cursor-pointer"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-chart-column">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M4 20h3" /><path d="M17 20h3" /><path d="M10.5 20h3" /><path d="M4 16h3" /><path d="M17 16h3" /><path d="M10.5 16h3" /><path d="M4 12h3" /><path d="M17 12h3" /><path d="M10.5 12h3" /><path d="M4 8h3" /><path d="M17 8h3" /><path d="M4 4h3" />
-                  </svg>
-                </button>
-              </div>
-
-            </div>
-            <button
-              title="Remove link"
-              onClick={() => setShortenedLinks(shortenedLinks.filter((_, i) => i !== index))}
-              className="text-red-500 hover:text-red-600 cursor-pointer"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-x"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg>
-            </button>
+            <LinkList
+              linkObj={linkObj}
+              handleCopyLink={handleCopyLink}
+              handleRemoveLink={handleRemoveLink}
+              index={index}
+              handleFetchStats={handleFetchStats}></LinkList>
 
           </li>
         ))}
