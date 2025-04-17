@@ -21,7 +21,8 @@ const ShortyBar: React.FC<{ handleFetchStats: (link: string) => void }> = ({ han
   const handleShortenLink = async () => {
     if (link.trim() !== "") {
       try {
-        const response = await fetch('http://localhost:3000/shorten', {
+
+        const response = await fetch('https://shtly.vercel.app/shorten', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
