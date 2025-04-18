@@ -7,28 +7,28 @@ const Stats: React.FC<StatsProps> = ({ stats, error, handleFetchStats }) => {
   const [link, setLink] = useState("");
 
   return (
-    <section className="flex flex-col items-center justify-start h-screen ">
-      <div className="mb-6 flex flex-col items-center justify-center ">
-        <h1 className="text-2xl font-semibold mb-6">
+    <section className="flex flex-col items-center justify-start w-full h-auto  py-10">
+      <div className="mb-6 flex flex-col items-center justify-center w-full ">
+        <h1 className="text-3xl lg:text-4xl font-semibold mb-6">
           Get shortened link stats
         </h1>
-        <div>
+        <div className="flex flex-col lg:flex-row gap-2 items-center justify-center   mb-6 w-full lg:w-2xl">
           <input
-            type="text"
+            type="text" 
             placeholder="Enter your shortened link"
             value={link}
-            onChange={(e) => setLink(e.target.value)}
-            className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-80"
+            onChange={(e) => setLink(e.target.value)} 
+            className="px-4 py-2 border items-center border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full lg:w-2xl"
           />
           <button
             onClick={() => handleFetchStats(link)}
-            className="ml-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="cursor-pointer flex items-center justify-center px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full lg:w-1/4"
           >
             Get Stats
           </button>
         </div>
       </div>
-      <div className="w-2xl p-4 border border-gray-300 rounded-md bg-white shadow-md">
+      <div className="w-full max-w-2xl md:w-2xl p-4 border border-gray-300 rounded-md bg-white shadow-md">
         {error ? (
           <p className="text-red-500">{error}</p> // Mostrar el mensaje de error
         ) : stats ? (

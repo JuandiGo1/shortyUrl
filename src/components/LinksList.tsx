@@ -5,17 +5,17 @@ const LinksList: React.FC<LinksListProps> = ({linkObj, handleCopyLink, handleRem
 
     return (
         <>
-            <div className="flex flex-1/2  px-4 py-2 items-center justify-between  border border-gray-300 rounded-md mb-2 bg-white shadow-sm mr-3">
-              <div className="flex justify-s  w-full">
+            <div className="flex  flex-1/2 flex-col gap-2 sm:flex-row px-4 py-2 items-center justify-between  border border-gray-300 rounded-md mb-2 bg-white shadow-sm mr-2  w-full h-auto">
+              <div className="flex flex-col gap-2 sm:flex-row justify-start  w-full">
                 {/* Enlace original a la izquierda */}
-                <span className="text-gray-500  w-1/2"  >
+                <span className="text-gray-500  sm:w-1/2"  >
                   {linkObj.original.length > 30 ? `${linkObj.original.slice(0, 30)}...` : linkObj.original}
                 </span>
                 <a
                   href={linkObj.short}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-500 hover:underline w-1/2 text-right mr-2"
+                  className="text-blue-500 hover:underline sm:w-1/2 text-left sm:text-right mr-2"
                 >
                   {linkObj.short}
                 </a>

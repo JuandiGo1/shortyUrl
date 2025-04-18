@@ -12,6 +12,7 @@ function App() {
   const handleFetchStats = async (link: string) => {
     try {
       setError(null);
+      console.log(link+'/stats');
       const res = await fetch(link + "/stats");
 
       if (!res.ok) {
@@ -35,7 +36,7 @@ function App() {
   };
 
   return (
-    <div className='flex flex-col items-center justify-center  h-screen  w-auto  '>
+    <div className='flex flex-col items-center justify-center min-h-screen    '>
       <ShortyBar handleFetchStats={handleFetchStats}></ShortyBar>
       <Stats stats={stats} error={error} handleFetchStats={handleFetchStats}></Stats>
     </div>

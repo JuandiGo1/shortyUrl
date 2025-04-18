@@ -57,19 +57,19 @@ const ShortyBar: React.FC<{ handleFetchStats: (link: string) => void }> = ({ han
   }
 
   return (
-    <section className="flex flex-col items-center justify-center w-4xl h-auto py-10">
-      <h1 className="text-4xl font-semibold mb-10">ShortyUrl</h1>
-      <div className="flex items-center space-x-2 mb-6">
+    <section className="flex flex-col items-center  justify-center w-full h-auto  py-4 px-2">
+      <h1 className="text-4xl lg:text-5xl font-semibold mb-10">ShortyUrl</h1>
+      <div className="flex flex-col lg:flex-row gap-2 items-center justify-center  mb-6 w-full lg:w-4xl">
         <input
           type="text"
           placeholder="Enter your link to shorten"
           value={link}
           onChange={(e) => setLink(e.target.value)}
-          className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-2xl"
+          className="px-4 py-2 border items-center border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full lg:w-2xl"
         />
         <button
           onClick={handleShortenLink}
-          className="cursor-pointer flex items-center px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="cursor-pointer flex items-center justify-center px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full lg:w-1/4"
         >
           <span className="mr-2">Shorten URL</span>
           <svg
@@ -97,7 +97,7 @@ const ShortyBar: React.FC<{ handleFetchStats: (link: string) => void }> = ({ han
         {shortenedLinks.map((linkObj, index) => (
           <li
             key={index}
-            className="flex items-center justify-between px-4 py-2 "
+            className="flex "
           >
             <LinkList
               linkObj={linkObj}
