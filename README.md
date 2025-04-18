@@ -1,32 +1,34 @@
 # ShortyURL Frontend [Vite + React + Tailwind 4]
 
-Frontend de la aplicación **ShortyURL**, una herramienta sencilla y moderna para acortar enlaces y consultar estadísticas de uso.
+Frontend of the **ShortyURL** application — a simple and modern tool to shorten links and view usage statistics.
 
-
-Este proyecto está construido con:
+This project is built with:
 
 - ⚡ [Vite](https://vitejs.dev/)
 - ⚛️ [React](https://reactjs.org/)
 - 💨 [Tailwind CSS v4](https://tailwindcss.com/)
 
 ---
-## 🌍 Despliegue y Repositorios
-Puedes ver la app completamente funcional en [ShortyUrl](https://shorty-url-web.vercel.app/)
 
-Puedes ver el repositorio de la API
-🔹 **Backend:** [ShortyURL Backend ](https://shorty-url-web.vercel.app/) 
+## 🌍 Deployment and Repositories
 
-## 🚀 Características
+You can see the live app here: [ShortyURL](https://shorty-url-web.vercel.app/)
 
-- Acorta enlaces de forma rápida y segura.
-- Guarda enlaces acortados en `localStorage` para mantenerlos entre sesiones.
-- Permite copiar enlaces al portapapeles con un clic.
-- Permite eliminar enlaces guardados.
-- Consulta estadísticas de cualquier enlace acortado.
+Check out the API repository:  
+🔹 **Backend:** [ShortyURL Backend](https://shorty-url-web.vercel.app/)
 
 ---
 
-## 📸 Captura de pantalla
+## 🚀 Features
+
+- Quickly and securely shortens links.
+- Stores shortened links in `localStorage` to persist them between sessions.
+- Allows you to copy links to the clipboard with one click.
+- Lets you delete saved links.
+- Displays usage statistics for any shortened link.
+
+---
+
+## 📸 Screenshot
+
 ![Macbook-Air-1559x1039](https://github.com/user-attachments/assets/5fd91bbc-b772-43f8-9c1f-8c1c5ae2c50c)
-
-
